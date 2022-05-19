@@ -3,6 +3,8 @@ const { sequelize } = require("../bd.service");
 
 const { QueryTypes } = require("sequelize");
 
+const jwt = require("jsonwebtoken");
+
 // Consulta en la Base de datos
 
 const list = async (query, pageStart = 1, pageLimit = 10) => {
@@ -61,11 +63,7 @@ const create = async (data) => {
 
   const usuarioModelResults = await UsuarioModel.create(data);
   return usuarioModelResults.dataValues;
-  // if (usuarioModelResults) {
-  //   return usuarioModelResults.dataValues;
-  // } else {
-  //   return null;
-  // }
+
 };
 
 // Actualizar en la Base de datos
@@ -98,6 +96,52 @@ const remove = async (usu_codigo) => {
   }
 };
 
+const login = async (data) => {
+  console.log("Login data", data);
+
+  let usuariosResults = await sequelize.query(
+    `SELECT usu_nombre, usu_pass 
+                                            FROM usuarios
+                                            WHERE usu_nombre = :n
+                                            AND usu_pass = :p LIMIT 1`,
+    {
+      replacements: {
+        n: data.usu_nombre,
+        p: data.usu_pass,
+      },
+      type: QueryTypes.SELECT,
+    }
+  );
+
+  console.log("usuariosResults:", usuariosResults);
+
+    
+  if (usuariosResults && usuariosResults.length >0) {
+    const payload = {
+      usu_nombre: usuariosResults[0].usu_nombre,
+      id: usuariosResults[0].id,
+    };
+
+    console.log("payload", payload);
+
+    var token = jwt.sign(payload, "shhhhhh");
+
+    return {
+      token,
+    };
+ } else {
+    throw new Error("Datos de acceso inválidos");
+  }
+
+};
+
+const logout = async (data) => {
+  console.log("create data", data);
+
+  const usuarioModelResults = await UsuarioModel.create(data);
+  return usuarioModelResults.dataValues;
+};
+
 module.exports = {
   list,
   listFilter,
@@ -105,4 +149,6 @@ module.exports = {
   getById,
   update,
   remove,
+  login,
+  logout,
 };

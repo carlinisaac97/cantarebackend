@@ -34,6 +34,10 @@ const UsuarioModel = sequelize.define(
       type: DataTypes.DATE,
       allowNull: true,
     },
+    usu_token: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   },
   {
     tableName: "usuarios",
