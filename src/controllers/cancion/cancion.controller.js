@@ -2,36 +2,13 @@ const cancionService = require("../../services/cancion/cancion.service");
 const decoder = require("../../utiles/jwt.js");
 
 const list = async (req, res) => {
-  try {
-    let usu_Id;
-    console.log(req.params);
-    console.log(req.body);
-    //console.log(req.usuarioId);
-  
-    console.log("Inicio decodificar");
-    usu_Id = decoder.decodificarToken(req.headers.authorization);
-  
-    if (!usu_Id) throw "Token invalido";
-  
-    console.log("fin decodificar");
-    console.log(usu_Id);
-    console.log(req.headers.authorization);
-  
-    console.log("El codigo el usuario que invoco es: ", usu_Id);
-  
-    const cancion = await cancionService.list(req.query.q);
-    res.send({
-      success: true,
-      cancion,
-    });
-  } catch (error) {
-    res.send({
-      success: false,
-      cancion:null,
-      error:error
-    });
-  }
+  console.log("El id del usuario que invoco es: ", req.usuarioId);
 
+  const cancion = await cancionService.list(req.query.q);
+  res.send({
+    success: true,
+    cancion,
+  });
 };
 
 const listFilter = async (req, res) => {

@@ -3,7 +3,7 @@ const { sequelize } = require("../services/bd.service");
 const authorization = async (request, response, next) => {
   const token = request.headers.authorization;
   let sql =
-    "SELECT usu_codigo, usu_nombre, usu_token FROM usuarios WHERE usu_token = :t";
+    "SELECT usu_codigo, usu_email, usu_token FROM usuarios WHERE usu_token = :t";
 
   let usuariosResults = await sequelize.query(sql, {
     replacements: {

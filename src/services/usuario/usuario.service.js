@@ -26,6 +26,7 @@ const listFilter = async (query, pageStart = 1, pageLimit = 10) => {
     `SELECT *
                                               FROM usuarios
                                               WHERE UPPER (usu_nombre) LIKE :q
+                                              OR UPPER (usu_email) LIKE :q
                                               OR UPPER (usu_documento) LIKE :q
                                               OR UPPER (usu_telefono) LIKE :q
                                               ORDER BY usu_nombre`,
@@ -99,13 +100,13 @@ const login = async (data) => {
   //console.log("login data", data);
 
   let usuariosResults = await sequelize.query(
-    `SELECT usu_codigo, usu_nombre, usu_token
+    `SELECT usu_codigo, usu_email, usu_token
                                               FROM usuarios
-                                              WHERE usu_nombre = :n
+                                              WHERE usu_email = :n
                                               AND usu_pass = :p LIMIT 1`,
     {
       replacements: {
-        n: data.usu_nombre,
+        n: data.usu_email,
         p: data.usu_pass,
       },
       type: QueryTypes.SELECT,
@@ -123,13 +124,13 @@ const login = async (data) => {
     }
 
     const payload = {
-      usu_nombre: data.usu_nombre,
+      usu_email: data.usu_email,
       usu_codigo: usuariosResults[0].usu_codigo,
     };
 
     //console.log("el payload es", payload);
 
-    var token = jwt.sign(payload, "aeroma");
+    var token = jwt.sign(payload, "cantador");
 
     let updateTokenUsuarioResults = await sequelize.query(
       `UPDATE usuarios
