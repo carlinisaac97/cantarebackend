@@ -16,6 +16,10 @@ const CancionModel = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    can_artista: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     can_fecha: {
       type: DataTypes.DATE,
       allowNull: false,

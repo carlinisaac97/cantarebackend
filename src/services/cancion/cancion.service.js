@@ -25,6 +25,7 @@ const listFilter = async (query, pageStart = 1, pageLimit = 10) => {
                                               FROM canciones
                                               WHERE UPPER (can_nombre) LIKE :q
                                               OR UPPER (can_lyrics) LIKE :q
+                                              OR UPPER (can_artista) LIKE :q
                                               ORDER BY can_nombre`,
     {
       replacements: {
