@@ -1,6 +1,8 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../services/bd.service");
 
+const CURRENT_TIMESTAMP = Date.now();
+
 const CancionModel = sequelize.define(
   "Canciones",
   {
@@ -16,7 +18,8 @@ const CancionModel = sequelize.define(
     },
     can_fecha: {
       type: DataTypes.DATE,
-      allowNull: true,
+      allowNull: false,
+      defaultValue: CURRENT_TIMESTAMP
     },
     can_comentario: {
       type: DataTypes.STRING,
