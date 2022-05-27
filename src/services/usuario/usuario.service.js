@@ -19,6 +19,7 @@ const list = async (query, pageStart = 1, pageLimit = 10) => {
   return usuariosArray;
 };
 
+
 // Consulta en la Base de datos con filtro
 
 const listFilter = async (query, pageStart = 1, pageLimit = 10) => {

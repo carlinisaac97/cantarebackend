@@ -2,7 +2,7 @@ const cancionService = require("../../services/cancion/cancion.service");
 const decoder = require("../../utiles/jwt.js");
 
 const list = async (req, res) => {
-  console.log("El id del usuario que invoco es: ", req.usuarioId);
+  //console.log("El id del usuario que invoco es: ", req.usuarioId);
 
   const cancion = await cancionService.list(req.query.q);
   res.send({

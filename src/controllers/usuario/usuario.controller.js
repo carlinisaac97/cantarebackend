@@ -1,4 +1,4 @@
-const { request } = require("express");
+// const { request } = require("express");
 const usuarioService = require("../../services/usuario/usuario.service");
 
 const list = async (req, res) => {
@@ -35,6 +35,25 @@ const create = async (req, res) => {
   });
 };
 
+// const create = async (req, res) => {
+//   // verifica primero si el email ya existe en otro usuario
+//   const usuario = await usuarioService.getByEmail(req.body.usu_email);
+//   if (usuario) {
+//     res.status(200).send({
+//       success: false,
+//       error: 'Usuario ya existe',
+//     });
+//     return;
+//   }
+
+//   const usuario = await usuarioService.create(req.body);
+
+//   res.status(202).send({
+//     success: true,
+//     usuario,
+//   });
+// };
+
 const update = async (req, res) => {
   const usuario = await usuarioService.update(req.body, req.params.id);
   console.log("datos actualizacion", usuario);
@@ -69,11 +88,11 @@ const login = async (req, res) => {
 
 const logout = async (req, res) => {
   
-  const usuario = await usuarioService.logout(req.usuarioId);
+  await usuarioService.logout(req.usuarioId);
   
   res.status(200).send({
     success: true,
-    usuario,
+    //usuario,
   });
 
 };

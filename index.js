@@ -4,6 +4,8 @@ const multer = require("multer");
 const upload = multer({ dest: "upload/" });
 const bodyparser = require("body-parser");
 
+const authorizationMiddleware = require('./src/middleware/authorization.middleware');
+
 const app = express();
 app.use(bodyparser.json());
 app.use(cors());
