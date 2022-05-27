@@ -4,9 +4,9 @@ const { sequelize } = require("../bd.service");
 const { QueryTypes } = require("sequelize");
 
 const jwt = require("jsonwebtoken");
+const { request } = require("express");
 
 // Consulta en la Base de datos
-
 const list = async (query, pageStart = 1, pageLimit = 10) => {
   const usuarioModelResults = await UsuarioModel.findAll();
 
@@ -39,7 +39,7 @@ const listFilter = async (query, pageStart = 1, pageLimit = 10) => {
 
   //usuariosResults = (usuariosResults && usuariosResults [0]) ? usuariosResults[0] : [];
 
-  console.log("usuariosResults", usuariosResults);
+  // console.log("usuariosResults", usuariosResults);
 
   return usuariosResults;
 };
@@ -63,7 +63,6 @@ const create = async (data) => {
 
   const usuarioModelResults = await UsuarioModel.create(data);
   return usuarioModelResults.dataValues;
-
 };
 
 // Actualizar en la Base de datos
@@ -97,13 +96,13 @@ const remove = async (usu_codigo) => {
 };
 
 const login = async (data) => {
-  console.log("Login data", data);
+  //console.log("login data", data);
 
   let usuariosResults = await sequelize.query(
-    `SELECT usu_nombre, usu_pass 
-                                            FROM usuarios
-                                            WHERE usu_nombre = :n
-                                            AND usu_pass = :p LIMIT 1`,
+    `SELECT usu_codigo, usu_nombre, usu_token
+                                              FROM usuarios
+                                              WHERE usu_nombre = :n
+                                              AND usu_pass = :p LIMIT 1`,
     {
       replacements: {
         n: data.usu_nombre,
@@ -113,33 +112,56 @@ const login = async (data) => {
     }
   );
 
-  console.log("usuariosResults:", usuariosResults);
+  //console.log("usuariosResults", usuariosResults);
 
-    
-  if (usuariosResults && usuariosResults.length >0) {
+  if (usuariosResults && usuariosResults.length > 0) {
+    if (usuariosResults[0].usu_token && usuariosResults[0].usu_codigo != "") {
+      return {
+        token: usuariosResults[0].usu_token,
+      };
+    } else {
+    }
+
     const payload = {
-      usu_nombre: usuariosResults[0].usu_nombre,
-      id: usuariosResults[0].id,
+      usu_nombre: data.usu_nombre,
+      usu_codigo: usuariosResults[0].usu_codigo,
     };
 
-    console.log("payload", payload);
+    //console.log("el payload es", payload);
 
-    var token = jwt.sign(payload, "shhhhhh");
+    var token = jwt.sign(payload, "aeroma");
+
+    let updateTokenUsuarioResults = await sequelize.query(
+      `UPDATE usuarios
+                                                SET usu_token = :t
+                                                WHERE usu_codigo = :i`,
+      {
+        replacements: {
+          t: token,
+          i: usuariosResults[0].usu_codigo,
+        },
+        type: QueryTypes.SELECT,
+      }
+    );
 
     return {
       token,
     };
- } else {
-    throw new Error("Datos de acceso inválidos");
+  } else {
+    throw new Error("DATOS DE ACCESO INVÁLIDOS");
   }
-
 };
 
-const logout = async (data) => {
-  console.log("create data", data);
-
-  const usuarioModelResults = await UsuarioModel.create(data);
-  return usuarioModelResults.dataValues;
+const logout = async (usuarioId) => {
+  let updateTokenUsuarioResults = await sequelize.query(
+    `UPDATE usuarios SET usu_token = null WHERE usu_codigo = :i`,
+    {
+      replacements: {
+        i: usuarioId,
+      },
+    }
+  );
+  return;
 };
 
 module.exports = {
