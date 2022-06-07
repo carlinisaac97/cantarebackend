@@ -1,22 +1,22 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../services/bd.service");
 
+const CURRENT_TIMESTAMP = Date.now();
+
 const PedidoModel = sequelize.define(
   "Pedidos",
   {
-    ped_id: {
+    ped_codigo: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true,
     },
-    usu_id_pedido: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
+ 
     ped_fecha: {
       type: DataTypes.DATE,
-      allowNull: true,
+      allowNull: false,
+      defaultValue: CURRENT_TIMESTAMP
     },
   },
   {

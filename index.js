@@ -10,10 +10,10 @@ const app = express();
 app.use(bodyparser.json());
 app.use(cors());
 
-require("./src/routes/usuario/usuario.routes")(app);
-require("./src/routes/canciones/canciones.routes")(app);
-require("./src/routes/pedido/pedido.routes")(app);
-require("./src/routes/artista/artista.routes")(app);
+require("./src/routes/usuario.routes")(app);
+require("./src/routes/canciones.routes")(app);
+require("./src/routes/pedido.routes")(app);
+require("./src/routes/artista.routes")(app);
 require("./src/routes/video/video.routes")(app);
 
 

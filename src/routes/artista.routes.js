@@ -1,4 +1,4 @@
-const artistaController = require("../../controllers/artista/artista.controller");
+const artistaController = require("../controllers/artista.controller");
 
 module.exports = (app) => {
   app.get("/artistas", artistaController.list);

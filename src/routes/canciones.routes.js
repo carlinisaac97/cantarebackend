@@ -1,5 +1,5 @@
-const cancionController = require("../../controllers/cancion/cancion.controller");
-const auhtorizationMiddleware = require("../../middleware/authorization.middleware");
+const cancionController = require("../controllers/cancion.controller");
+const auhtorizationMiddleware = require("../middleware/authorization.middleware");
 
 
 module.exports = (app) => {

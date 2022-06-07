@@ -1,5 +1,5 @@
-const usuarioController = require("../../controllers/usuario/usuario.controller");
-const auhtorizationMiddleware = require("../../middleware/authorization.middleware");
+const usuarioController = require("../controllers/usuario.controller");
+// const auhtorizationMiddleware = require("../middleware/authorization.middleware");
 
 
 module.exports = (app) => {

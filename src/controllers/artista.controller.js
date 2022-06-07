@@ -1,4 +1,4 @@
-const artistaService = require("../../services/artista/artista.service");
+const artistaService = require("../services/artista.service");
 
 const list = async (req, res) => {
   const artista = await artistaService.list(req.query.q);

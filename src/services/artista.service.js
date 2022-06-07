@@ -1,5 +1,5 @@
-const { ArtistaModel } = require("../../models/artista.model");
-const { sequelize } = require("../bd.service");
+const { ArtistaModel } = require("../models/artista.model");
+const { sequelize } = require("./bd.service");
 
 const { QueryTypes } = require("sequelize");
 

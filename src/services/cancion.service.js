@@ -1,5 +1,5 @@
-const { CancionModel } = require("../../models/cancion.model");
-const { sequelize } = require("../bd.service");
+const { CancionModel } = require("../models/cancion.model");
+const { sequelize } = require("./bd.service");
 
 const { QueryTypes } = require("sequelize");
 

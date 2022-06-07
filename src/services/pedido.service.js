@@ -1,5 +1,5 @@
-const { PedidoModel } = require("../../models/pedido.model");
-const { sequelize } = require("../bd.service");
+const { PedidoModel } = require("../models/pedido.model");
+const { sequelize } = require("./bd.service");
 
 const { QueryTypes } = require("sequelize");
 
@@ -16,31 +16,6 @@ const list = async (query, pageStart = 1, pageLimit = 10) => {
 
   return pedidosArray;
 };
-
-// Consulta en la Base de datos con filtro cambiar para vincular con el USER
-
-// const listFilter = async (query, pageStart = 1, pageLimit = 10) => {
-//   let pedidosResults = await sequelize.query(
-//     `SELECT *
-//                                               FROM pedidos
-//                                               WHERE UPPER (usu_nombre) LIKE :q
-//                                               OR UPPER (usu_documento) LIKE :q
-//                                               OR UPPER (usu_telefono) LIKE :q
-//                                               ORDER BY usu_nombre`,
-//     {
-//       replacements: {
-//         q: query ? "%" + query.toUpperCase() + "%" : "%",
-//       },
-//       type: QueryTypes.SELECT,
-//     }
-//   );
-
-  //pedidosResults = (pedidosResults && pedidosResults [0]) ? pedidosResults[0] : [];
-
-//   console.log("pedidosResults", pedidosResults);
-
-//   return pedidosResults;
-// };
 
 // Buscar en la Base de datos por codigo
 
@@ -73,7 +48,7 @@ const create = async (data) => {
 const update = async (data, id) => {
   const pedidoModelCount = await PedidoModel.update(data, {
     where: {
-      ped_id: id,
+      ped_codigo: id,
     },
   });
   console.log("update data", pedidoModelCount.datavalues);
@@ -82,12 +57,12 @@ const update = async (data, id) => {
 
 // Eliminar en la Base de datos
 
-const remove = async (ped_id) => {
-  console.log("remove codigo", ped_id);
+const remove = async (ped_codigo) => {
+  console.log("remove codigo", ped_codigo);
 
   const pedidoModelCount = await PedidoModel.destroy({
     where: {
-      ped_id,
+      ped_codigo,
     },
   });
 

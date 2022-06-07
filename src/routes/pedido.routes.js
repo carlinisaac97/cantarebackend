@@ -1,4 +1,4 @@
-const pedidoController = require("../../controllers/pedido/pedido.controller");
+const pedidoController = require("../controllers/pedido.controller");
 
 module.exports = (app) => {
   app.get("/pedidos", pedidoController.list);

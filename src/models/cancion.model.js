@@ -33,6 +33,10 @@ const CancionModel = sequelize.define(
       type: DataTypes.STRING,
       allowNull: true,
     },
+    can_solicitada: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   },
   {
     tableName: "canciones",
