@@ -19,6 +19,14 @@ const listFilter = async (req, res) => {
   });
 };
 
+const listCancionesSolicitadas = async (req, res) => {
+  const cancion = await cancionService.listCancionesSolicitadas(req.query.q);
+  res.send({
+    success: true,
+    cancion,
+  });
+};
+
 const getById = async (req, res) => {
   const cancion = await cancionService.getById(req.params.id);
 
@@ -46,6 +54,14 @@ const update = async (req, res) => {
   });
 };
 
+const updateCancionSolicitada = async  (req, res) => {
+  const cancion = await cancionService.updateCancionSolicitada(req.params.id);
+  res.status(202).send({
+    success: 'true',
+  });
+};
+
+ 
 const remove = async (req, res) => {
   const booleanValue = await cancionService.remove(req.params.id);
   res.status(202).send({
@@ -53,4 +69,13 @@ const remove = async (req, res) => {
   });
 };
 
-module.exports = { list, getById, create, update, remove, listFilter };
+module.exports = {
+  list,
+  listCancionesSolicitadas,
+  getById,
+  create,
+  update,
+  updateCancionSolicitada,
+  remove,
+  listFilter,
+};

@@ -17,6 +17,27 @@ const list = async (query, pageStart = 1, pageLimit = 10) => {
   return pedidosArray;
 };
 
+const listCancionesSolicitadas = async (query, pageStart = 1, pageLimit = 10) => {
+  // let cancionesResults = await sequelize.query(
+  //   `UPDATE *
+  //                                             FROM pedidos
+  //                                             WHERE UPPER (can_nombre) LIKE :q
+  //                                             OR UPPER (can_lyrics) LIKE :q
+  //                                             OR UPPER (can_artista) LIKE :q
+  //                                             ORDER BY can_nombre`,
+  //   {
+  //     replacements: {
+  //       q: query ? "%" + query.toUpperCase() + "%" : "%",
+  //     },
+  //     type: QueryTypes.SELECT,
+  //   }
+  // );
+
+  // console.log("cancionesResults", cancionesResults);
+
+  // return cancionesResults;
+};
+
 // Buscar en la Base de datos por codigo
 
 const getById = async (codigo) => {
@@ -36,11 +57,6 @@ const create = async (data) => {
 
   const pedidoModelResults = await PedidoModel.create(data);
   return pedidoModelResults.dataValues;
-  // if (pedidoModelResults) {
-  //   return pedidoModelResults.dataValues;
-  // } else {
-  //   return null;
-  // }
 };
 
 // Actualizar en la Base de datos
@@ -75,7 +91,7 @@ const remove = async (ped_codigo) => {
 
 module.exports = {
   list,
-  // listFilter,
+  listCancionesSolicitadas,
   create,
   getById,
   update,

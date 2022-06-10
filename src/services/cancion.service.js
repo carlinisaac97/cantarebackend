@@ -42,6 +42,26 @@ const listFilter = async (query, pageStart = 1, pageLimit = 10) => {
   return cancionesResults;
 };
 
+const listCancionesSolicitadas = async (query, pageStart = 1, pageLimit = 10) =>{
+  let cancionesResults = await sequelize.query(
+    `SELECT *
+                                              FROM canciones
+                                              WHERE can_solicitada = 1
+                                              ORDER BY can_nombre`,
+    {
+      replacements: {
+        q: query ? "%" + query.toUpperCase() + "%" : "%",
+      },
+      type: QueryTypes.SELECT,
+    }
+  );
+  console.log("cancionesResults", cancionesResults);
+
+  return cancionesResults;
+};
+
+
+
 // Buscar en la Base de datos por codigo
 
 const getById = async (codigo) => {
@@ -82,24 +102,37 @@ const update = async (data, id) => {
 
 
 
-
 // Eliminar en la Base de datos
 
 const remove = async (can_id) => {
   console.log("remove codigo", can_id);
-
+  
   const cancionModelCount = await CancionModel.destroy({
     where: {
       can_id,
     },
   });
-
+  
   if (cancionModelCount > 0) {
     return true;
   } else {
     return false;
   }
 };
+
+const updateCancionSolicitada = async (id) => {
+  let updateCanciona = await sequelize.query(
+
+    `UPDATE canciones SET can_solicitada = 0 WHERE can_id = :i`,
+    {
+      replacements:{
+        i: id
+      }
+    }
+    );
+    return
+};
+
 
 module.exports = {
   list,
@@ -108,4 +141,6 @@ module.exports = {
   getById,
   update,
   remove,
+  listCancionesSolicitadas,
+  updateCancionSolicitada,
 };
