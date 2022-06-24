@@ -13,11 +13,9 @@ app.use(cors());
 require("./src/routes/usuario.routes")(app);
 require("./src/routes/canciones.routes")(app);
 require("./src/routes/pedido.routes")(app);
-
-require("./src/routes/clasificador.routes")(app);
-
 require("./src/routes/artista.routes")(app);
 require("./src/routes/video/video.routes")(app);
 
+require("./src/routes/rol.routes")(app);
 
 app.listen(3000, () => console.log("listening on port 3000"));
