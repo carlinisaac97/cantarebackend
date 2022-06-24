@@ -18,4 +18,4 @@ require("./src/routes/video/video.routes")(app);
 
 require("./src/routes/rol.routes")(app);
 
-app.listen(3000, () => console.log("listening on port 3000"));
+app.listen(3000, () => console.log("listening on PORT 3000"));
